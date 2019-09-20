@@ -24,7 +24,7 @@ public class SimpleMarkdownToHTMLConverterTests {
   
   @Test
   public void testWhiteSpace() {
-    Assert.assertEquals("", converter.convertToHTML("\n\n"));
+    Assert.assertEquals("\n\n", converter.convertToHTML("\n\n"));
   }
   
   private void compareSampleInputOutputFiles(String inputPath, String outputPath) throws Exception {
@@ -53,12 +53,12 @@ public class SimpleMarkdownToHTMLConverterTests {
     markdownLine.append(testString);
     for(int i=1; i <= 10; i++) {
       markdownLine.insert(0, '#');
-      String result = converter.formatLine(markdownLine.toString());
+      String result = converter.convertHeadings(markdownLine.toString());
       if(i <= 6) {
-        Assert.assertEquals("<h" + i + ">" + testString + "</h" + i + ">\n", result);
+        Assert.assertEquals("<h" + i + ">" + testString + "</h" + i + ">", result);
       } else {
         Assert.assertFalse(result.startsWith("<h" + i + ">"));
-        Assert.assertFalse(result.endsWith("</h" + i + ">\n"));
+        Assert.assertFalse(result.endsWith("</h" + i + ">"));
       }
     }
   }
